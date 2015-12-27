@@ -15,6 +15,7 @@ public class BoatDTOMapper implements DTOMapper<Boat, BoatDTO> {
     public BoatDTO mapTo(Boat entity) {
         BoatDTO dto = new BoatDTO();
 
+        dto.setId(dto.getId());
         dto.setName(entity.getName());
 
         return dto;
@@ -24,6 +25,7 @@ public class BoatDTOMapper implements DTOMapper<Boat, BoatDTO> {
     public Boat mapFrom(BoatDTO dto) {
         Boat boat = new Boat();
 
+        boat.setId(dto.getId());
         boat.setName(dto.getName());
 
         return boat;

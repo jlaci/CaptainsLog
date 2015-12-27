@@ -1,6 +1,6 @@
-package hu.nextval.captainslog.web.backend.logbookserver.boats;
+package hu.nextval.captainslog.web.backend.logbookserver.regattas;
 
-import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
+import hu.nextval.captainslog.web.backend.common.entities.regattas.Regatta;
 import hu.nextval.captainslog.web.backend.logbookserver.metamodell.service.BaseService;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +8,5 @@ import org.springframework.stereotype.Service;
  * @author Janoky Laszlo Viktor <janoky.laszlo@bmeautsoft.hu>
  */
 @Service
-public class BoatService extends BaseService<Boat, Long> {
-
+public class RegattaService extends BaseService<Regatta, Long> {
 }

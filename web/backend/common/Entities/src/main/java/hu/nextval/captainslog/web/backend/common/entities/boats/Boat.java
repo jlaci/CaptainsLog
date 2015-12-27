@@ -1,5 +1,6 @@
 package hu.nextval.captainslog.web.backend.common.entities.boats;
 
+import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
 import hu.nextval.captainslog.web.backend.common.entities.results.RegattaResult;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +14,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Boat {
+public class Boat implements BaseEntity<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     protected String name;
 

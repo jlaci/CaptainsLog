@@ -1,5 +1,6 @@
 package hu.nextval.captainslog.web.backend.common.entities.results;
 
+import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
 import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
 import hu.nextval.captainslog.web.backend.common.entities.regattas.Regatta;
 import lombok.Getter;
@@ -15,11 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class RegattaResult {
+public class RegattaResult implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @ManyToOne
     protected Regatta regatta;
@@ -29,4 +30,7 @@ public class RegattaResult {
 
     @ManyToOne
     protected Boat boat;
+
+    protected int position;
+
 }

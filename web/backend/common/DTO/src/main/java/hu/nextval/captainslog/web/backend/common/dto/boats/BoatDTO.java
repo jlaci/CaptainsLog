@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class BoatDTO {
 
-    protected long boatId;
+    protected long id;
 
     protected String name;
 
