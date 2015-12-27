@@ -15,6 +15,7 @@ import java.util.List;
  * @author Janoky Laszlo Viktor <janoky.laszlo@bmeautsoft.hu>
  */
 @RestController
+@RequestMapping("/results/regatta")
 public class RegattaResultController extends BaseController<RegattaResult, Long, RegattaResultDTO> {
 
     @Autowired
@@ -24,36 +25,36 @@ public class RegattaResultController extends BaseController<RegattaResult, Long,
     protected BoatService boatService;
 
     @Override
-    @RequestMapping(method = RequestMethod.DELETE, path = "results/regatta/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     public void delete(@PathVariable("id") Long id) {
         super.delete(id);
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.POST, path = "results/regatta/")
+    @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody RegattaResultDTO entity) {
         super.create(entity);
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.GET, path = "results/regatta/")
+    @RequestMapping(method = RequestMethod.GET)
     public List<RegattaResultDTO> getAll() {
         return super.getAll();
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.GET, path = "results/regatta/{id}")
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public RegattaResultDTO getOne(@PathVariable("id") Long id) {
         return super.getOne(id);
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.PUT, path = "results/regatta/{id}")
+    @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
     public RegattaResultDTO update(Long existingId, @RequestBody RegattaResultDTO updated) {
         return super.update(existingId, updated);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/results/regatta/byboat")
+    @RequestMapping(method = RequestMethod.GET, path = "/byboat")
     List<RegattaResultDTO> getAllForBoat(@PathVariable("boatId")long boatId){
         Boat boat = boatService.getOne(boatId);
 

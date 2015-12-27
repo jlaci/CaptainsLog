@@ -17,6 +17,8 @@ public class RegattaDTO {
 
     protected String name;
 
+    protected String type;
+
     protected Date startDate;
 
     protected Date endDate;

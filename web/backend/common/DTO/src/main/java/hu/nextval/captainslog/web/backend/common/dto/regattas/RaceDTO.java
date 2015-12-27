@@ -14,6 +14,8 @@ public class RaceDTO {
 
     protected long id;
 
+    protected String type;
+
     protected Date startDate;
 
     protected Date endDate;

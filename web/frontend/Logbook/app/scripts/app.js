@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 /**
  * @ngdoc overview
  * @name logbookApp
@@ -8,33 +10,43 @@
  *
  * Main module of the application.
  */
-angular
+var logbookApp = angular
   .module('logbookApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
-  ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/regattas', {
-        templateUrl: 'views/regattas.html',
-        controller: 'RegattasController',
-        controllerAs: 'regattas'
-      })
-      .when('/results', {
-        templateUrl: 'views/results.html',
-        controller: 'ResultsController',
-        controllerAs: 'results'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+    'ngTouch',
+    'logbookApp.services'
+  ]
+);
+
+var serviceModule = angular
+  .module('logbookApp.services', []
+);
+
+serviceModule.value('restServiceUrl', 'http://localhost:8080');
+
+logbookApp.config(function ($routeProvider) {
+  $routeProvider
+    .when('/', {
+      templateUrl: 'views/main.html',
+      controller: 'MainCtrl',
+      controllerAs: 'main'
+    })
+    .when('/regattas', {
+      templateUrl: 'views/regattas.html',
+      controller: 'RegattasController',
+      controllerAs: 'regattas'
+    })
+    .when('/results', {
+      templateUrl: 'views/results.html',
+      controller: 'ResultsController',
+      controllerAs: 'results'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+  }
+);

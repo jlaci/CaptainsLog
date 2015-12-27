@@ -1,1 +1,31 @@
-<p>Versenyek.</p>
+<div ng-repeat="season in seasons">
+  <div class="text-center">
+    <h3>{{season.date}}</h3>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th>Név</th>
+      <th>Kezdés ideje</th>
+      <th>Befejezés ideje</th>
+      <th>Típusa</th>
+      <th>Műveletek</th>
+    </tr>
+
+    <tr ng-repeat="regatta in season.regattas">
+      <td>{{regatta.name}}</td>
+      <td>{{parseDate(regatta.startDate) | date:'medium'}}</td>
+      <td>{{parseDate(regatta.endDate) | date:'medium'}}</td>
+      <td>{{parseType(regatta.type)}}</td>
+      <td>
+        <a><i class="fa fa-eye fa-fw"></i>Eredmények</a>
+        &nbsp;
+        <a><i class="fa fa-pencil fa-fw"></i>Szerkesztés</a>
+        &nbsp;
+        <a><i class="fa fa-trash fa-fw"></i>Törlés</a>
+      </td>
+    </tr>
+  </table>
+
+  <hr />
+</div>

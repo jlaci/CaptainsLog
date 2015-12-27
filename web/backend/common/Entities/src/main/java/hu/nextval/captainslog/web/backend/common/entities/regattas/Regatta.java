@@ -24,11 +24,19 @@ public class Regatta implements BaseEntity<Long> {
 
     protected String name;
 
+    protected RegattaType regattaType;
+
     protected Date startDate;
 
     protected Date endDate;
 
     @OneToMany(mappedBy = "regatta")
     protected List<Race> races;
+
+    public enum RegattaType {
+        TOURING,
+        COURSE,
+        MIXED
+    }
 
 }

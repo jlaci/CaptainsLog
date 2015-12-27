@@ -15,7 +15,7 @@ public class BoatDTOMapper implements DTOMapper<Boat, BoatDTO> {
     public BoatDTO mapTo(Boat entity) {
         BoatDTO dto = new BoatDTO();
 
-        dto.setId(dto.getId());
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
 
         return dto;

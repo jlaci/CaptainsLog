@@ -19,10 +19,17 @@ public class Race implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    protected RaceType raceType;
+
     @ManyToOne
     protected Regatta regatta;
 
     protected Date startDate;
 
     protected Date endDate;
+
+    public enum RaceType {
+        TOURING,
+        COURSE
+    }
 }

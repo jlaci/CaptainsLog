@@ -27,6 +27,7 @@ public class RegattaDTOMapper implements DTOMapper<Regatta, RegattaDTO>{
         dto.setName(entity.getName());
         dto.setStartDate(entity.getStartDate());
         dto.setEndDate(entity.getEndDate());
+        dto.setType(entity.getRegattaType().name());
         dto.setRaces(new ArrayList<RaceDTO>(entity.getRaces().size()));
 
         for(Race race : entity.getRaces()) {
@@ -45,6 +46,7 @@ public class RegattaDTOMapper implements DTOMapper<Regatta, RegattaDTO>{
             regatta.setName(dto.getName());
             regatta.setStartDate(dto.getStartDate());
             regatta.setEndDate(dto.getEndDate());
+            regatta.setRegattaType(Regatta.RegattaType.valueOf(dto.getType()));
             regatta.setRaces(new ArrayList<Race>());
 
             if (dto.getRaces() != null) {
