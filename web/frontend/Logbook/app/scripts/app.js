@@ -41,7 +41,12 @@ logbookApp.config(function ($routeProvider, $httpProvider) {
         controllerAs: 'main'
       })
       .when('/regattas', {
-        templateUrl: 'views/regattas.html',
+        templateUrl: 'views/regattas/overview.html',
+        controller: 'RegattasController',
+        controllerAs: 'regattas'
+      })
+      .when('/regattas/new', {
+        templateUrl: 'views/regattas/new.html',
         controller: 'RegattasController',
         controllerAs: 'regattas'
       })
