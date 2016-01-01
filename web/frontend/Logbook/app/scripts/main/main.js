@@ -20,17 +20,8 @@ angular.module('logbookApp')
  * Controller for the header.
  */
 angular.module('logbookApp')
-  .controller('HeaderController', function ($scope, $location, BoatService) {
+  .controller('HeaderController', function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
     };
-
-    BoatService.getAll(function(result) {
-      $scope.availableBoats = result;
-
-      if(result != null && result.length > 0) {
-        $scope.selectedBoat = result[0].id;
-      }
-    });
-
   });
