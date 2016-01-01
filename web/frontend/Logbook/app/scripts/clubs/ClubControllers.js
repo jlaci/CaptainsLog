@@ -65,18 +65,26 @@ angular.module('logbookApp')
 );
 
 angular.module('logbookApp')
-  .controller('NewRegattaController', function ($scope, RegattaService, ClubService) {
-    //Set up the result
-    $scope.regatta = new Regatta();
-
+  .controller('NewRegattaController', function ($scope, RegattaService) {
     //Get the available organizing clubs
-    ClubService.getAll(function(result) {
-      $scope.clubs = result;
-
-      if(result != null && result.length > 0) {
-        $scope.regatta.organizer.id = $scope.clubs[0].id;
+    $scope.clubs = [
+      {
+        id: 1,
+        name: "MVSZ"
+      }, {
+        id: 2,
+        name: "TVSK"
+      } , {
+        id: 3,
+        name: "Kereked"
       }
-    });
+    ];
+
+    //Set up the result
+    $scope.regatta = {
+      type : 'TOURING',
+      club : $scope.clubs[0].id
+    };
 
     //Set up the datepickers
     //Common attributes
@@ -85,61 +93,26 @@ angular.module('logbookApp')
       startingDay: 1
     };
 
-    $scope.datePickerStates = {
-
-    };
-
     var d = new Date();
     d.setHours(9);
     d.setMinutes(0);
     $scope.regatta.startDate = d;
+    $scope.startDateOpen = false;
+
     $scope.regatta.endDate = d;
+    $scope.endDateOpen = false;
 
-
-    //Race management
-    $scope.lastRaceNumber = 0;
-
-    $scope.addRace = function () {
-      var race = new Race();
-      race.order = ++$scope.lastRaceNumber;
-      race.startDate = $scope.regatta.startDate;
-      race.endDate = $scope.regatta.endDate;
-
-      $scope.regatta.races.push(race);
+    $scope.openStartDate = function($event) {
+      $scope.startDateOpen = true;
     };
 
-    $scope.removeRace = function(raceNumber) {
-      $scope.regatta.races.splice(raceNumber - 1, 1);
-
-      for(var i = 0; i < $scope.regatta.races.length; i++) {
-       $scope.regatta.races[i].order = i + 1;
-      }
-
-      $scope.lastRaceNumber = $scope.regatta.races.length;
+    $scope.openEndDate = function($event) {
+      $scope.endDateOpen = true;
     };
 
-    $scope.moveRaceUp = function(raceNumber) {
-      var index = raceNumber - 1;
 
-      if(index >= 1 && index < $scope.regatta.races.length) {
-        var aboveIndex = index - 1;
-        var above = $scope.regatta.races[aboveIndex];
-        var current = $scope.regatta.races[index];
 
-        current.order = above.order;
-        $scope.regatta.races[aboveIndex] = current;
 
-        above.order = current.order + 1;
-        $scope.regatta.races[index] = above;
-      }
-    };
 
-    $scope.moveRaceDown = function(raceNumber) {
-      $scope.moveRaceUp(raceNumber + 1);
-    };
-
-    $scope.save = function() {
-      RegattaService.save($scope.regatta);
-    };
   }
 );

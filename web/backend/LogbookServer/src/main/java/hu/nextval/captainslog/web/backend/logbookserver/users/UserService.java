@@ -18,18 +18,6 @@ public class UserService extends BaseService<User,Long> {
 
     public User getByPrincipal(Principal principal) {
         String name = principal.getName();
-
-        //Mock the admin TODO: Remove when done debugging
-        if("admin".equals(name)) {
-            User user = new User();
-
-            user.setId(0l);
-            user.setUsername("admin");
-            user.setEmail("admin@innosys.hu");
-
-            return user;
-        }
-
         return repository.findByUsername(name);
     }
 }

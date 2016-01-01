@@ -13,6 +13,8 @@
       <th>Kezdés ideje</th>
       <th>Befejezés ideje</th>
       <th>Típusa</th>
+      <th>Szervező egyesület</th>
+      <th>Hely</th>
       <th>Műveletek</th>
     </tr>
 
@@ -21,6 +23,8 @@
       <td>{{parseDate(regatta.startDate) | date:'medium'}}</td>
       <td>{{parseDate(regatta.endDate) | date:'medium'}}</td>
       <td>{{parseType(regatta.type)}}</td>
+      <td>{{regatta.organizer.name}}</td>
+      <td>{{regatta.location}}</td>
       <td>
         <a><i class="fa fa-eye fa-fw"></i>Eredmények</a>
         &nbsp;

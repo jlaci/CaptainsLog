@@ -12,7 +12,9 @@ import java.util.Date;
 @Setter
 public class RaceDTO {
 
-    protected long id;
+    protected Long id;
+
+    protected int order;
 
     protected String type;
 

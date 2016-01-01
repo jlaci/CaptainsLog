@@ -19,6 +19,8 @@ public class Race implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    protected int orderInRegatta;
+
     protected RaceType raceType;
 
     @ManyToOne

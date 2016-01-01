@@ -1,47 +1,176 @@
-<form class="form-horizontal">
+<form class="form-horizontal" ng-controller="NewRegattaController">
   <fieldset>
 
     <!-- Form Name -->
-    <legend>Form Name</legend>
+    <legend>Verseny</legend>
 
-    <!-- Text input-->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="regatta_name">Verseny neve:</label>
-      <div class="col-md-4">
-        <input id="regatta_name" name="regatta_name" type="text" placeholder="Név" class="form-control input-md" required="">
+    <div class="row">
 
+      <div class="col-md-6">
+        <!-- Regatta name-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_name">Verseny neve:</label>
+          <div class="col-md-6">
+            <input id="regatta_name" name="regatta_name" type="text" placeholder="Név" class="form-control input-md" required="true" ng-model="regatta.name">
+          </div>
+        </div>
+
+        <!-- Regatta type -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_type">Típusa</label>
+          <div class="col-md-6">
+            <select id="regatta_type" name="regatta_type" class="form-control" ng-model="regatta.type">
+              <option value="TOURING">Túra</option>
+              <option value="COURSE">Pálya</option>
+              <option value="MIXED">Vegyes</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <!-- Regatta location-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_location">Verseny helye:</label>
+          <div class="col-md-6">
+            <input id="regatta_location" name="regatta_location" type="text" placeholder="Hely" class="form-control input-md" required="true" ng-model="regatta.location">
+          </div>
+        </div>
+
+        <!-- Organizing club -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_club">Szervező egyesület:</label>
+          <div class="col-md-6">
+            <select id="regatta_club" name="regatta_club" class="form-control" ng-model="regatta.organizer.id" ng-options="c.id as c.name for c in clubs">
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Select Basic -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="regatta_type">Típusa</label>
-      <div class="col-md-4">
-        <select id="regatta_type" name="regatta_type" class="form-control">
-          <option value="TOURING">Túra</option>
-          <option value="COURSE">Pálya</option>
-          <option value="MIXED">Vegyes</option>
-        </select>
+    <hr />
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <!-- Start date-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_start_date">Kezdés dátuma</label>
+          <div class="col-md-6">
+            <p class="input-group">
+              <input id="regatta_start_date" type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="regatta.startDate" is-open="datePickerStates['regattaStart']" datepicker-options="dateOptions" ng-required="true" close-text="Close" >
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="datePickerStates['regattaStart'] = true"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Start time-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_start_time">Kezdés ideje</label>
+          <div class="col-md-6">
+            <uib-timepicker id="regatta_start_time" ng-model="regatta.startDate" hour-step="1" minute-step="5" show-meridian="false"></uib-timepicker>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <!-- End date-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_end_date">Befejezés dátuma</label>
+          <div class="col-md-6">
+            <p class="input-group">
+              <input id="regatta_end_date" type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="regatta.endDate"  is-open="datePickerStates['regattaEnd']" datepicker-options="dateOptions" ng-required="true" close-text="Close" >
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="datePickerStates['regattaEnd'] = true"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <!-- End time-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="regatta_end_time">Befejezés ideje</label>
+          <div class="col-md-6">
+            <uib-timepicker id="regatta_end_time" ng-model="regatta.endDate" hour-step="1" minute-step="5" show-meridian="false"></uib-timepicker>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Text input-->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="regatta_start_date">Kezdés időpontja</label>
-      <div class="col-md-4">
-        <input id="regatta_start_date" name="regatta_start_date" type="text" placeholder="yyyy/mm/dd" class="form-control input-md">
+    <legend>Futamok</legend>
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Kezdés ideje</th>
+        <th>Befejezés ideje</th>
+        <th>Típusa</th>
+        <th>Műveletek</th>
+      </tr>
 
-      </div>
-    </div>
+      <tr ng-repeat="race in regatta.races">
+        <!-- Race order in regatta -->
+        <td class="col-md-1"><b>{{race.order}}</b></td>
+        <!-- Race start date -->
+        <td class="col-md-4">
+          <div class="row">
+            <div class="col-md-8">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="race.startDate" is-open="datePickerStates['race' + race.order + 'Start']" datepicker-options="dateOptions" ng-required="true" close-text="Close" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="datePickerStates['race' + race.order + 'Start'] = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+              </p>
+            </div>
+            <div class="col-md-4">
+              <uib-timepicker ng-model="race.startDate" hour-step="1" minute-step="5" show-meridian="false" show-spinners="false"></uib-timepicker>
+            </div>
+          </div>
+        </td>
+        <!-- Race end date -->
+        <td class="col-md-4">
+          <div class="row">
+            <div class="col-md-8">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="race.endDate" is-open="datePickerStates['race' + race.order + 'End']" datepicker-options="dateOptions" ng-required="true" close-text="Close" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="datePickerStates['race' + race.order + 'End'] = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+              </p>
+            </div>
+            <div class="col-md-4">
+              <uib-timepicker ng-model="race.endDate" hour-step="1" minute-step="5" show-meridian="false" show-spinners="false"></uib-timepicker>
+            </div>
+          </div>
+        </td>
+        <!-- Race type -->
+        <td class="col-md-1">
+          <select class="form-control" ng-model="race.type">
+            <option value="TOURING">Túra</option>
+            <option value="COURSE">Pálya</option>
+          </select>
+        </td>
+        <!-- Operations -->
+        <td class="col-md-2">
 
-    <!-- Text input-->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="regatta_end_date">Befejezés időpontja</label>
-      <div class="col-md-4">
-        <input id="regatta_end_date" name="regatta_end_date" type="text" placeholder="yyyy/mm/dd" class="form-control input-md">
-
-      </div>
-    </div>
-
+          <a ng-click="moveRaceUp(race.order)"><i class="fa fa-arrow-up fa-fw"></i>Fel</a>
+          <a ng-click="moveRaceDown(race.order)"><i class="fa fa-arrow-down fa-fw"></i>Le</a>
+          <a ng-click="removeRace(race.order)"><i class="fa fa-trash fa-fw"></i>Törlés</a>
+        </td>
+      </tr>
+    </table>
+    <div class="text-center"><a ng-click="addRace()"><i class="fa fa-plus fa-fw"></i>Új futam</a></div>
   </fieldset>
+
+  <hr />
+  <div class="text-center">
+    <a class="btn btn-primary" ng-click="save()"><i class="fa fa-floppy-o"></i>&nbsp;Mentés</a>
+    <a class="btn btn-warning"><i class="fa fa-times"></i>&nbsp;Mégsem</a>
+  </div>
+
+  <br />
+  <pre>{{regatta}}</pre>
+
 </form>
+

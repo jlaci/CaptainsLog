@@ -18,7 +18,8 @@ var logbookApp = angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'logbookApp.services'
+    'logbookApp.services',
+    'ui.bootstrap'
   ]
 );
 

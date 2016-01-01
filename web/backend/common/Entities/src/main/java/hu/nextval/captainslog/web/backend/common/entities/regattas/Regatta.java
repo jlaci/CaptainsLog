@@ -1,6 +1,7 @@
 package hu.nextval.captainslog.web.backend.common.entities.regattas;
 
 import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
+import hu.nextval.captainslog.web.backend.common.entities.clubs.Club;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,13 +25,18 @@ public class Regatta implements BaseEntity<Long> {
 
     protected String name;
 
+    protected String location;
+
     protected RegattaType regattaType;
 
     protected Date startDate;
 
     protected Date endDate;
 
-    @OneToMany(mappedBy = "regatta")
+    @ManyToOne
+    protected Club organizer;
+
+    @OneToMany(mappedBy = "regatta", cascade = CascadeType.ALL)
     protected List<Race> races;
 
     public enum RegattaType {

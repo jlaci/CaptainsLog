@@ -23,10 +23,7 @@ public abstract class BaseService <EntityType extends BaseEntity<IDType>, IDType
             throw new ServiceException("Entity must not be null!");
         }
 
-        if(repository.exists(entity.getId())) {
-            throw new ServiceException("Entity with id: " + entity.getId() + " already exists!");
-        }
-
+        entity.setId(null);
         repository.save(entity);
     }
 
