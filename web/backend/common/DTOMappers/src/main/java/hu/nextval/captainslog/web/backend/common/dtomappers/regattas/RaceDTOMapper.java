@@ -16,6 +16,7 @@ public class RaceDTOMapper implements DTOMapper<Race, RaceDTO>{
         RaceDTO dto = new RaceDTO();
 
         dto.setId(entity.getId());
+        dto.setType(entity.getRaceType().name());
         dto.setOrder(entity.getOrderInRegatta());
         dto.setStartDate(entity.getStartDate());
         dto.setEndDate(entity.getEndDate());
@@ -28,6 +29,7 @@ public class RaceDTOMapper implements DTOMapper<Race, RaceDTO>{
         Race race = new Race();
 
         race.setId(dto.getId());
+        race.setRaceType(Race.RaceType.valueOf(dto.getType()));
         race.setOrderInRegatta(dto.getOrder());
         race.setStartDate(dto.getStartDate());
         race.setEndDate(dto.getEndDate());

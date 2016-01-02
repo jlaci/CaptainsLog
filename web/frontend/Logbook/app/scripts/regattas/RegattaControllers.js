@@ -9,6 +9,7 @@
  */
 angular.module('logbookApp')
   .controller('RegattasController', function ($scope, RegattaService) {
+
     //Utility functions
     $scope.parseDate = function(date) {
       return new Date(date);
@@ -26,11 +27,16 @@ angular.module('logbookApp')
       }
     };
 
+    $scope.delete = function(regatta) {
+      RegattaService.delete(regatta.id, function() {
+        $scope.addNotification("Sikeres törlés!");
+        $scope.regattas.splice($scope.regattas.indexOf(regatta), 1);
+        sortToSeasons($scope.regattas);
+      });
+    };
 
-    //Fill the page with data, by seasons
-    RegattaService.getAll(function(regattas) {
-      $scope.regattas = regattas;
 
+    function sortToSeasons(regattas) {
       var seasons = [];
       var seasonsByYear = {};
 
@@ -59,45 +65,74 @@ angular.module('logbookApp')
       }
 
       $scope.seasons = seasons;
+    }
+
+
+    //Fill the page with data, by seasons
+    RegattaService.getAll(function(regattas) {
+      $scope.regattas = regattas;
+      sortToSeasons(regattas);
     });
 
   }
 );
 
 angular.module('logbookApp')
-  .controller('NewRegattaController', function ($scope, RegattaService, ClubService) {
-    //Set up the result
-    $scope.regatta = new Regatta();
+  .controller('RegattaEditorController', function ($scope, $routeParams, $location, RegattaService, ClubService) {
 
-    //Get the available organizing clubs
-    ClubService.getAll(function(result) {
-      $scope.clubs = result;
+    function createNew() {
+      $scope.regatta = new Regatta();
+      $scope.editMode = false;
 
-      if(result != null && result.length > 0) {
+      var d = new Date();
+      d.setHours(9);
+      d.setMinutes(0);
+      $scope.regatta.startDate = d;
+      $scope.regatta.endDate = d;
+
+      $scope.lastRaceNumber = 0;
+
+      if($scope.clubs != null && $scope.clubs.length > 0) {
         $scope.regatta.organizer.id = $scope.clubs[0].id;
       }
-    });
+    }
 
-    //Set up the datepickers
-    //Common attributes
-    $scope.dateOptions = {
-      formatYear: 'yy',
-      startingDay: 1
-    };
+    function loadExisting(regatta) {
+      $scope.regatta = regatta;
+      $scope.editMode = true;
+      $scope.regatta = regatta;
 
-    $scope.datePickerStates = {
+      $scope.lastRaceNumber = regatta.races.length;
+    }
 
-    };
+    function initialize() {
+      //Get the available organizing clubs
+      ClubService.getAll(function(result) {
+        $scope.clubs = result;
 
-    var d = new Date();
-    d.setHours(9);
-    d.setMinutes(0);
-    $scope.regatta.startDate = d;
-    $scope.regatta.endDate = d;
+        if($scope.clubs != null && $scope.clubs.length > 0 && $scope.editMode === false) {
+          $scope.regatta.organizer.id = $scope.clubs[0].id;
+        }
+      });
 
+      //Set up the datepickers
+      $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+      };
+      $scope.datePickerStates = {};
 
-    //Race management
-    $scope.lastRaceNumber = 0;
+      //Check if we are editing or creating a new
+      if ($routeParams.regattaId !== undefined) {
+        RegattaService.getOne($routeParams.regattaId, function (regatta) {
+          loadExisting(regatta);
+        });
+      } else {
+        createNew();
+      }
+    }
+
+    initialize();
 
     $scope.addRace = function () {
       var race = new Race();
@@ -139,7 +174,17 @@ angular.module('logbookApp')
     };
 
     $scope.save = function() {
-      RegattaService.save($scope.regatta);
+      if($scope.editMode === true) {
+        RegattaService.update($scope.regatta.id, $scope.regatta, function() {
+          $scope.addNotification("Sikeres frissítés!");
+          $location.path("/regattas")
+        });
+      } else {
+        RegattaService.save($scope.regatta, function() {
+          $scope.addNotification("Sikeres mentés!");
+          $location.path("/regattas");
+        });
+      }
     };
   }
 );

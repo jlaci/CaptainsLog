@@ -1,15 +1,26 @@
 "use strict";
 
 serviceModule.factory('RegattaService', ['$resource', 'restServiceUrl', function RegattaService($resource, restServiceUrl) {
-  var Regatta = $resource(restServiceUrl + "/regatta/", [], { withCredentials : true});
+  var Regattas = $resource(restServiceUrl + "/regatta/:id", {id:'@id'}, { withCredentials : true, 'update': {method : 'PUT'}});
 
   return {
     getAll : function(callback) {
-      Regatta.query(callback);
+      Regattas.query(callback);
     },
-    save : function(data) {
-      var newRegatta = new Regatta(data);
-      newRegatta.$save();
+    getOne : function(id, callback) {
+      Regattas.get({id: id}).$promise.then(callback);
+    },
+    update : function (id, data, callback) {
+      Regattas.update({id: id}, data).$promise.then(callback);
+    },
+    save : function(data, callback) {
+      var newRegatta = new Regattas(data);
+      newRegatta.$save(callback);
+    },
+    delete : function(id, callback) {
+      var regatta = new Regattas({id:id});
+      regatta.$delete(callback);
     }
   };
+
 }]);

@@ -1,0 +1,98 @@
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Hajó módosítása /&nbsp;Új hajó felvitele</legend>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="hajoneve">Hajónév</label>
+      <div class="col-md-4">
+        <input id="hajoneve" name="hajoneve" type="text" placeholder="hajoneve" class="form-control input-md">
+        <span class="help-block">Új hajó neve</span>
+      </div>
+    </div>
+
+    <!-- Prepended text-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="vitorlaszam">Vitorlaszám</label>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">HUN-</span>
+          <input id="vitorlaszam" name="vitorlaszam" class="form-control" placeholder="vitorlaszam" type="text">
+        </div>
+        <p class="help-block">Vitorlaszám a HUN- előtag nélkül</p>
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="hajotipus">Hajótípus</label>
+      <div class="col-md-4">
+        <select id="hajotipus" name="hajotipus" class="form-control">
+          <option value="1">Option one</option>
+          <option value="2">Option two</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="kikoto">Kikötő</label>
+      <div class="col-md-4">
+        <select id="kikoto" name="kikoto" class="form-control">
+          <option value="1">Option one</option>
+          <option value="2">Option two</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="egyesulet">Egyesület</label>
+      <div class="col-md-4">
+        <select id="egyesulet" name="egyesulet" class="form-control">
+          <option value="1">Option one</option>
+          <option value="2">Option two</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="tulajdonos">Tulajdonos</label>
+      <div class="col-md-4">
+        <input id="tulajdonos" name="tulajdonos" type="text" placeholder="tulajdonos" class="form-control input-md">
+        <span class="help-block">Tulajdonos /&nbsp;kormányos</span>
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="telefonszam">Telefonszám</label>
+      <div class="col-md-4">
+        <input id="telefonszam" name="telefonszam" type="text" placeholder="telefonszam" class="form-control input-md">
+        <span class="help-block">Tulajdonos telefonszáma</span>
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="emailcim">E-mail cím</label>
+      <div class="col-md-4">
+        <input id="emailcim" name="emailcim" type="text" placeholder="emailcom" class="form-control input-md">
+        <span class="help-block">Tulajdonos e-mail címe</span>
+      </div>
+    </div>
+
+    <!-- Button (Double) -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="okbutton"></label>
+      <div class="col-md-8">
+        <button id="okbutton" name="okbutton" class="btn btn-success">Mentés</button>
+        <button id="cancelbutton" name="cancelbutton" class="btn btn-danger">Mégsem</button>
+      </div>
+    </div>
+
+  </fieldset>
+</form>

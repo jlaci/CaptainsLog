@@ -18,7 +18,7 @@ angular.module('logbookApp').controller('UserController', function UserControlle
           $cookies.put("authenticated", "true");
 
           //List the boats for the user
-          BoatService.getAll(function(result) {
+          BoatService.getOwn(function(result) {
             $rootScope.user.availableBoats = result;
 
             if(result != null && result.length > 0) {

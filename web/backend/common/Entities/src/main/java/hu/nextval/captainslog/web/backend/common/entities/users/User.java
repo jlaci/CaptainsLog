@@ -1,13 +1,12 @@
 package hu.nextval.captainslog.web.backend.common.entities.users;
 
 import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
+import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Janoky Laszlo Viktor <janoky.laszlo@bmeautsoft.hu>
@@ -24,5 +23,8 @@ public class User implements BaseEntity<Long>{
     protected String username;
 
     protected String email;
+
+    @ManyToMany
+    protected List<Boat> boats;
 
 }

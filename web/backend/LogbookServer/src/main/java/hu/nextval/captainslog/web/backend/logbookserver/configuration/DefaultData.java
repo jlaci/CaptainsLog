@@ -45,20 +45,22 @@ public class DefaultData {
 
     protected Club mvsz;
 
+    protected User admin;
+
     @PostConstruct
     public void init() {
         log.info("Initializing default data.");
+        injectExampleUsers();
         injectExampleBoats();
         injectExampleClubs();
         injectExampleRegattas();
-        injectExampleUsers();
     }
 
     private void injectExampleUsers() {
         User user = new User();
         user.setUsername("admin");
         user.setEmail("admin@captainslog.hu");
-        userRepository.save(user);
+        admin = userRepository.save(user);
     }
 
     private void injectExampleClubs() {
@@ -78,11 +80,17 @@ public class DefaultData {
     private void injectExampleBoats() {
         Boat fanatic = new Boat();
         fanatic.setName("Fanatic");
-        fanatic = boatRepository.save(fanatic);
+        fanatic.setRoster(Collections.singletonList(admin));
 
         Boat echo = new Boat();
         echo.setName("Echo");
-        echo = boatRepository.save(echo);
+
+        admin.setBoats(Collections.singletonList(fanatic));
+
+        boatRepository.save(fanatic);
+        boatRepository.save(echo);
+
+        userRepository.save(admin);
     }
 
 
@@ -106,6 +114,8 @@ public class DefaultData {
             kekszalag15race.setEndDate(sdf.parse("04/07/2015 09:00"));
             kekszalag15race.setRegatta(kekszalag15);
             kekszalag15race.setRaceType(Race.RaceType.TOURING);
+            kekszalag15race.setOrderInRegatta(1);
+
 
             kekszalag15.setRaces(Collections.singletonList(kekszalag15race));
             //raceRepository.save(kekszalag15race);
@@ -127,6 +137,7 @@ public class DefaultData {
             kekszalag14race.setEndDate(sdf.parse("04/07/2014 09:00"));
             kekszalag14race.setRegatta(kekszalag14);
             kekszalag14race.setRaceType(Race.RaceType.TOURING);
+            kekszalag14race.setOrderInRegatta(1);
 
             kekszalag14.setRaces(Collections.singletonList(kekszalag14race));
             //raceRepository.save(kekszalag14race);

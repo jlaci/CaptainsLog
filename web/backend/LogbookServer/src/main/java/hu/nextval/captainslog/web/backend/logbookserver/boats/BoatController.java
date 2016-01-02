@@ -3,8 +3,11 @@ package hu.nextval.captainslog.web.backend.logbookserver.boats;
 import hu.nextval.captainslog.web.backend.common.dto.boats.BoatDTO;
 import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
 import hu.nextval.captainslog.web.backend.logbookserver.metamodell.controller.BaseController;
+import hu.nextval.captainslog.web.backend.logbookserver.users.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -13,6 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/boat")
 public class BoatController extends BaseController<Boat, Long, BoatDTO> {
+
+    @Autowired
+    protected BoatService service;
+
+    @Autowired
+    protected UserService userService;
 
     @Override
     @RequestMapping(method = RequestMethod.POST)
@@ -24,6 +33,11 @@ public class BoatController extends BaseController<Boat, Long, BoatDTO> {
     @RequestMapping(method = RequestMethod.GET)
     public List<BoatDTO> getAll() {
         return super.getAll();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/own")
+    public List<BoatDTO> getOwn(Principal principal) {
+        return asDTOList(service.getForUser(userService.getByPrincipal(principal)));
     }
 
     @Override

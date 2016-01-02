@@ -1,0 +1,31 @@
+<div class="text-center"><a href="#/boats/new"><i class="fa fa-plus fa-fw"></i>Új hajó felvétele</a></div>
+
+<hr />
+
+<table class="table">
+  <tr>
+    <th>Hajó neve</th>
+    <th>Vitorlaszáma</th>
+    <th>Típusa</th>
+    <th>Kikötő</th>
+    <th>Egyesület</th>
+    <th>Tulajdonos</th>
+    <th>Műveletek</th>
+  </tr>
+
+  <tr ng-repeat="boat in boats">
+    <td>{{boat.name}}</td>
+    <td>{{boat.sailNumber}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+      <a><i class="fa fa-list fa-fw"></i>Legénység</a>
+      &nbsp;
+      <a href="#/boats/{{boat.id}}/edit"><i class="fa fa-pencil fa-fw"></i>Szerkesztés</a>
+      &nbsp;
+      <a ng-click="delete(boat)"><i class="fa fa-trash fa-fw"></i>Törlés</a>
+    </td>
+  </tr>
+</table>

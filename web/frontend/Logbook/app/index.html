@@ -16,10 +16,17 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="logbookApp">
+  <body ng-app="logbookApp" ng-controller="MainCtrl">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+    <growl-notifications></growl-notifications>
+    <div ng-repeat="(id, notification) in notifications track by id">
+      <growl-notification>
+        {{notification}}
+      </growl-notification>
+    </div>
 
     <!-- Add your site or application content here -->
     <div class="header">
@@ -43,7 +50,7 @@
 
             <!-- Buttons -->
             <ul class="nav navbar-nav" ng-if="authenticated">
-              <li ng-class="{ active: isActive('/')}"><a href="#/">Kezdőlap</a></li>
+              <li ng-class="{ active: isActive('/boats')}"><a href="#/boats">Hajók</a></li>
               <li ng-class="{ active: isActive('/regattas')}"><a ng-href="#/regattas">Versenyek</a></li>
               <li ng-class="{ active: isActive('/results')}"><a ng-href="#/results">Eredmények</a></li>
             </ul>
@@ -98,6 +105,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-growl-notifications/dist/angular-growl-notifications.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -114,6 +122,7 @@
         <script src="scripts/users/UserController.js"></script>
 
         <script src="scripts/boats/BoatService.js"></script>
+        <script src="scripts/boats/BoatControllers.js"></script>
 
         <script src="scripts/regattas/RegattaModel.js"></script>
         <script src="scripts/regattas/RegattaService.js"></script>

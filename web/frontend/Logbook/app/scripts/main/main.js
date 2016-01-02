@@ -8,8 +8,13 @@
  * Controller of the logbookApp
  */
 angular.module('logbookApp')
-  .controller('MainCtrl', function () {
+  .controller('MainCtrl', function ($scope) {
+    $scope.notifications = {};
+    $scope.notificationIndex = 0;
 
+    $scope.addNotification = function(notification){
+      $scope.notifications[$scope.notificationIndex++] = notification;
+    };
   });
 
 /**

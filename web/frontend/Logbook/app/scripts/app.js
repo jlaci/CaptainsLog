@@ -19,7 +19,8 @@ var logbookApp = angular
     'ngSanitize',
     'ngTouch',
     'logbookApp.services',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'growlNotifications'
   ]
 );
 
@@ -27,7 +28,7 @@ var serviceModule = angular
   .module('logbookApp.services', []
 );
 
-serviceModule.value('restServiceUrl', 'http://localhost:8080');
+serviceModule.value('restServiceUrl', '/api');
 
 logbookApp.config(function ($routeProvider, $httpProvider) {
 
@@ -41,15 +42,35 @@ logbookApp.config(function ($routeProvider, $httpProvider) {
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
+      .when('/boats', {
+        templateUrl: 'views/boats/overview.html',
+        controller: 'BoatsController',
+        controllerAs: 'boats'
+      })
+      .when('/boats/new', {
+        templateUrl: 'views/boats/editor.html',
+        controller: 'BoatEditorController',
+        controllerAs: 'boatsEdit'
+      })
+      .when('/boats/:boatId/edit', {
+        templateUrl: 'views/boats/editor.html',
+        controller: 'BoatEditorController',
+        controllerAs: 'boatsEdit'
+      })
       .when('/regattas', {
         templateUrl: 'views/regattas/overview.html',
         controller: 'RegattasController',
         controllerAs: 'regattas'
       })
       .when('/regattas/new', {
-        templateUrl: 'views/regattas/new.html',
-        controller: 'RegattasController',
-        controllerAs: 'regattas'
+        templateUrl: 'views/regattas/editor.html',
+        controller: 'RegattaEditorController',
+        controllerAs: 'regattasEdit'
+      })
+      .when('/regattas/:regattaId/edit', {
+        templateUrl: 'views/regattas/editor.html',
+        controller: 'RegattaEditorController',
+        controllerAs: 'regattasEdit'
       })
       .when('/results', {
         templateUrl: 'views/results.html',
@@ -64,7 +85,27 @@ logbookApp.config(function ($routeProvider, $httpProvider) {
       .otherwise({
         redirectTo: '/'
       });
-    }
+
+
+    var interceptor = ['$q', '$location', '$injector', '$rootScope',
+      function ($q, $location, $injector, $rootScope) {
+        return {
+          response: function (response) {
+            return response;
+          },
+          responseError: function (response) {
+            if (response.status == 401) {
+              $rootScope.authenticated = false;
+              $location.path("/");
+              return $q.reject(response);
+            }
+            return $q.reject(response);
+          }
+        }
+      }];
+
+    $httpProvider.interceptors.push(interceptor);
+  }
 );
 
 
@@ -80,7 +121,7 @@ logbookApp.run(function($rootScope, $cookies, UserService, BoatService) {
       $rootScope.user = data;
 
       //List the boats for the user
-      BoatService.getAll(function(result) {
+      BoatService.getOwn(function(result) {
         $rootScope.user.availableBoats = result;
 
         if(result != null && result.length > 0) {
