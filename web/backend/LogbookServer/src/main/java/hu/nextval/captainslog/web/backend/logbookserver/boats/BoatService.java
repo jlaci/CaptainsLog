@@ -18,6 +18,6 @@ public class BoatService extends BaseService<Boat, Long> {
     protected BoatRepository repository;
 
     public List<Boat> getForUser(User user) {
-        return repository.findByUser(user.getId());
+        return repository.findBySailor(user.getSailor().getId());
     }
 }

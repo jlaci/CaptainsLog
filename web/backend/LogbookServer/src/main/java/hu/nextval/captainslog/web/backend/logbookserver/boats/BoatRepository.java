@@ -14,6 +14,6 @@ public interface BoatRepository extends CrudRepository<Boat, Long> {
 
     List<Boat> findByName(String name);
 
-    @Query("SELECT b FROM Boat b INNER JOIN b.roster r WHERE r.id = (:userId)")
-    List<Boat> findByUser(@Param("userId") Long userId);
+    @Query("SELECT b FROM Boat b INNER JOIN b.roster r WHERE r.id = (:sailorId)")
+    List<Boat> findBySailor(@Param("sailorId") Long sailorId);
 }

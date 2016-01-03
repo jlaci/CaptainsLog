@@ -2,7 +2,7 @@ package hu.nextval.captainslog.web.backend.common.entities.boats;
 
 import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
 import hu.nextval.captainslog.web.backend.common.entities.results.RegattaResult;
-import hu.nextval.captainslog.web.backend.common.entities.users.User;
+import hu.nextval.captainslog.web.backend.common.entities.sailor.Sailor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +27,7 @@ public class Boat implements BaseEntity<Long>{
     protected List<RegattaResult> regattaResults;
 
     @ManyToMany
-    protected List<User> roster;
+    protected List<Sailor> roster;
 
     @Override
     public String toString() {

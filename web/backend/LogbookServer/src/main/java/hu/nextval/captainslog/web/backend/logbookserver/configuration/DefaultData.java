@@ -4,20 +4,25 @@ import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
 import hu.nextval.captainslog.web.backend.common.entities.clubs.Club;
 import hu.nextval.captainslog.web.backend.common.entities.regattas.Race;
 import hu.nextval.captainslog.web.backend.common.entities.regattas.Regatta;
+import hu.nextval.captainslog.web.backend.common.entities.sailor.Sailor;
 import hu.nextval.captainslog.web.backend.common.entities.users.User;
+import hu.nextval.captainslog.web.backend.common.entities.users.UserRole;
 import hu.nextval.captainslog.web.backend.logbookserver.boats.BoatRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.clubs.ClubRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.regattas.RegattaRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.regattas.races.RaceRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.users.UserRepository;
+import hu.nextval.captainslog.web.backend.logbookserver.users.roles.UserRoleRepository;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -43,23 +48,52 @@ public class DefaultData {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected UserRoleRepository userRoleRepository;
+
+    @Autowired
+    protected PasswordEncoder passwordEncoder;
+
     protected Club mvsz;
+
+    protected UserRole adminRole;
+
+    protected UserRole userRole;
 
     protected User admin;
 
     @PostConstruct
     public void init() {
         log.info("Initializing default data.");
+        injectDefaultRoles();
         injectExampleUsers();
         injectExampleBoats();
         injectExampleClubs();
         injectExampleRegattas();
     }
 
+    private void injectDefaultRoles() {
+        adminRole = new UserRole();
+        adminRole.setName("ADMIN");
+
+        userRole = new UserRole();
+        userRole.setName("USER");
+
+        adminRole = userRoleRepository.save(adminRole);
+        userRole = userRoleRepository.save(userRole);
+    }
+
     private void injectExampleUsers() {
         User user = new User();
         user.setUsername("admin");
         user.setEmail("admin@captainslog.hu");
+        user.setRoles(Arrays.asList(adminRole, userRole));
+        user.setPassword(passwordEncoder.encode("password"));
+
+        Sailor sailor = new Sailor();
+        sailor.setUser(user);
+        user.setSailor(sailor);
+
         admin = userRepository.save(user);
     }
 
@@ -80,12 +114,12 @@ public class DefaultData {
     private void injectExampleBoats() {
         Boat fanatic = new Boat();
         fanatic.setName("Fanatic");
-        fanatic.setRoster(Collections.singletonList(admin));
+        fanatic.setRoster(Collections.singletonList(admin.getSailor()));
 
         Boat echo = new Boat();
         echo.setName("Echo");
 
-        admin.setBoats(Collections.singletonList(fanatic));
+        admin.getSailor().setBoats(Collections.singletonList(fanatic));
 
         boatRepository.save(fanatic);
         boatRepository.save(echo);

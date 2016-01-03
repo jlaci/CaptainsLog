@@ -1,7 +1,7 @@
 package hu.nextval.captainslog.web.backend.common.entities.users;
 
 import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
-import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
+import hu.nextval.captainslog.web.backend.common.entities.sailor.Sailor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +22,14 @@ public class User implements BaseEntity<Long>{
 
     protected String username;
 
+    protected String password;
+
     protected String email;
 
-    @ManyToMany
-    protected List<Boat> boats;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    protected Sailor sailor;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    protected List<UserRole> roles;
 
 }
