@@ -2,7 +2,6 @@ package hu.nextval.captainslog.web.backend.common.entities.sailor;
 
 import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
 import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
-import hu.nextval.captainslog.web.backend.common.entities.users.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,11 +20,18 @@ public class Sailor implements BaseEntity<Long>{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    private User user;
+    protected String firstName;
+
+    protected String lastName;
 
     @ManyToMany
     protected List<Boat> boats;
 
+    public Sailor() {
+    }
 
+    public Sailor(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

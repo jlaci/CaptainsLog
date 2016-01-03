@@ -1,0 +1,25 @@
+<table class="table">
+  <tr>
+    <th>Név</th>
+    <th>Cím</th>
+    <th>Telefon</th>
+    <th>Email</th>
+    <th>Weblap</th>
+    <th>Egyesület</th>
+    <th>Műveletek</th>
+  </tr>
+
+  <tr ng-repeat="port in ports">
+    <td>{{port.name}}</td>
+    <td>{{port.address}}</td>
+    <td>{{port.phone}}</td>
+    <td>{{port.email}}</td>
+    <td>{{port.web}}</td>
+    <td>{{port.club}}</td>
+    <td>
+      <a><i class="fa fa-ship fa-fw"></i>Hajók</a>
+      &nbsp;
+      <a><i class="fa fa-map fa-fw"></i>Térkép</a>
+    </td>
+  </tr>
+</table>

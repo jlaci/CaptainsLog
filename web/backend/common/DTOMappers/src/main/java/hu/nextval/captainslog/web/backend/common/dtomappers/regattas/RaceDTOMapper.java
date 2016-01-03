@@ -13,6 +13,10 @@ public class RaceDTOMapper implements DTOMapper<Race, RaceDTO>{
 
     @Override
     public RaceDTO mapTo(Race entity) {
+        if(entity == null) {
+            return null;
+        }
+
         RaceDTO dto = new RaceDTO();
 
         dto.setId(entity.getId());
@@ -26,6 +30,10 @@ public class RaceDTOMapper implements DTOMapper<Race, RaceDTO>{
 
     @Override
     public Race mapFrom(RaceDTO dto) {
+        if(dto == null) {
+            return null;
+        }
+
         Race race = new Race();
 
         race.setId(dto.getId());

@@ -77,6 +77,16 @@ logbookApp.config(function ($routeProvider, $httpProvider) {
         controller: 'ResultsController',
         controllerAs: 'results'
       })
+      .when('/clubs', {
+        templateUrl: 'views/clubs/overview.html',
+        controller: 'ClubsController',
+        controllerAs: 'clubs'
+      })
+      .when('/ports', {
+        templateUrl: 'views/ports/overview.html',
+        controller: 'PortsController',
+        controllerAs: 'ports'
+      })
       .when('/user/profile', {
         templateUrl: 'views/users/profile.html',
         controller: 'UserController',

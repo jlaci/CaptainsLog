@@ -2,6 +2,7 @@ package hu.nextval.captainslog.web.backend.logbookserver.configuration;
 
 import hu.nextval.captainslog.web.backend.common.entities.boats.Boat;
 import hu.nextval.captainslog.web.backend.common.entities.clubs.Club;
+import hu.nextval.captainslog.web.backend.common.entities.ports.Port;
 import hu.nextval.captainslog.web.backend.common.entities.regattas.Race;
 import hu.nextval.captainslog.web.backend.common.entities.regattas.Regatta;
 import hu.nextval.captainslog.web.backend.common.entities.sailor.Sailor;
@@ -9,8 +10,10 @@ import hu.nextval.captainslog.web.backend.common.entities.users.User;
 import hu.nextval.captainslog.web.backend.common.entities.users.UserRole;
 import hu.nextval.captainslog.web.backend.logbookserver.boats.BoatRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.clubs.ClubRepository;
+import hu.nextval.captainslog.web.backend.logbookserver.ports.PortRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.regattas.RegattaRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.regattas.races.RaceRepository;
+import hu.nextval.captainslog.web.backend.logbookserver.sailors.SailorRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.users.UserRepository;
 import hu.nextval.captainslog.web.backend.logbookserver.users.roles.UserRoleRepository;
 import lombok.extern.apachecommons.CommonsLog;
@@ -52,25 +55,52 @@ public class DefaultData {
     protected UserRoleRepository userRoleRepository;
 
     @Autowired
+    protected SailorRepository sailorRepository;
+
+    @Autowired
     protected PasswordEncoder passwordEncoder;
 
+    @Autowired
+    protected PortRepository portRepository;
+
+
     protected Club mvsz;
+
+    protected Club the;
+
+    protected Club tvsk;
+
+    protected Port thePort;
 
     protected UserRole adminRole;
 
     protected UserRole userRole;
 
+
     protected User admin;
+
+    protected Sailor sailor1;
+
+    protected Sailor sailor2;
 
     @PostConstruct
     public void init() {
         log.info("Initializing default data.");
         injectDefaultRoles();
+        injectExampleSailors();
         injectExampleUsers();
-        injectExampleBoats();
+        injectExamplePorts();
         injectExampleClubs();
+        injectExampleBoats();
         injectExampleRegattas();
     }
+
+    private void injectExamplePorts() {
+        thePort = new Port();
+        thePort.setName("THE");
+        thePort = portRepository.save(thePort);
+    }
+
 
     private void injectDefaultRoles() {
         adminRole = new UserRole();
@@ -83,6 +113,14 @@ public class DefaultData {
         userRole = userRoleRepository.save(userRole);
     }
 
+    private void injectExampleSailors() {
+        sailor1 = new Sailor("Teszt", "Sailor1");
+        sailor2 = new Sailor("Teszt", "Sailor2");
+
+        sailor1 = sailorRepository.save(sailor1);
+        sailor2 = sailorRepository.save(sailor2);
+    }
+
     private void injectExampleUsers() {
         User user = new User();
         user.setUsername("admin");
@@ -91,7 +129,8 @@ public class DefaultData {
         user.setPassword(passwordEncoder.encode("password"));
 
         Sailor sailor = new Sailor();
-        sailor.setUser(user);
+        sailor.setFirstName("Admin");
+        sailor.setLastName("");
         user.setSailor(sailor);
 
         admin = userRepository.save(user);
@@ -100,31 +139,40 @@ public class DefaultData {
     private void injectExampleClubs() {
         mvsz = new Club();
         mvsz.setName("MVSZ");
-        clubRepository.save(mvsz);
+        mvsz = clubRepository.save(mvsz);
 
-        Club tvsk = new Club();
+        tvsk = new Club();
         tvsk.setName("TVSK");
-        clubRepository.save(tvsk);
+        tvsk = clubRepository.save(tvsk);
 
-        Club the = new Club();
+        the = new Club();
         the.setName("THE");
-        clubRepository.save(the);
+        the = clubRepository.save(the);
     }
 
     private void injectExampleBoats() {
         Boat fanatic = new Boat();
         fanatic.setName("Fanatic");
-        fanatic.setRoster(Collections.singletonList(admin.getSailor()));
+        fanatic.setSailNumber("HUN 826");
+        fanatic.setOwner(admin.getSailor());
+        fanatic.setClub(the);
+        fanatic.setPort(thePort);
+
+        fanatic.setRoster(Arrays.asList(admin.getSailor(), sailor1));
+        admin.getSailor().setBoats(Collections.singletonList(fanatic));
+        boatRepository.save(fanatic);
+        sailorRepository.save(admin.getSailor());
+
 
         Boat echo = new Boat();
         echo.setName("Echo");
-
-        admin.getSailor().setBoats(Collections.singletonList(fanatic));
-
-        boatRepository.save(fanatic);
+        echo.setSailNumber("HUN 72");
+        echo.setOwner(sailor2);
+        echo.setRoster(Collections.singletonList(sailor2));
+        sailor2.setBoats(Collections.singletonList(echo));
         boatRepository.save(echo);
+        sailorRepository.save(sailor2);
 
-        userRepository.save(admin);
     }
 
 

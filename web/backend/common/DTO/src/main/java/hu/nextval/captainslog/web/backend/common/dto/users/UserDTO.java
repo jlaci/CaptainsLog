@@ -1,5 +1,6 @@
 package hu.nextval.captainslog.web.backend.common.dto.users;
 
+import hu.nextval.captainslog.web.backend.common.dto.sailors.SailorDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,7 @@ public class UserDTO {
     protected String email;
 
     protected Long id;
+
+    protected SailorDTO sailor;
 
 }

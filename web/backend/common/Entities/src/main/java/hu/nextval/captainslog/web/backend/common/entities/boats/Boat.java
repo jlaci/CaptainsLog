@@ -1,6 +1,8 @@
 package hu.nextval.captainslog.web.backend.common.entities.boats;
 
 import hu.nextval.captainslog.web.backend.common.entities.BaseEntity;
+import hu.nextval.captainslog.web.backend.common.entities.clubs.Club;
+import hu.nextval.captainslog.web.backend.common.entities.ports.Port;
 import hu.nextval.captainslog.web.backend.common.entities.results.RegattaResult;
 import hu.nextval.captainslog.web.backend.common.entities.sailor.Sailor;
 import lombok.Getter;
@@ -23,10 +25,21 @@ public class Boat implements BaseEntity<Long>{
 
     protected String name;
 
+    protected String sailNumber;
+
+    @ManyToOne
+    protected Club club;
+
+    @ManyToOne
+    protected Port port;
+
+    @ManyToOne
+    protected Sailor owner;
+
     @OneToMany(mappedBy = "boat")
     protected List<RegattaResult> regattaResults;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "boats")
     protected List<Sailor> roster;
 
     @Override

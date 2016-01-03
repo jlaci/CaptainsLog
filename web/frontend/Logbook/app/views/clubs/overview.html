@@ -1,0 +1,23 @@
+<table class="table">
+  <tr>
+    <th>Név</th>
+    <th>Cím</th>
+    <th>Telefon</th>
+    <th>Email</th>
+    <th>Weblap</th>
+    <th>Műveletek</th>
+  </tr>
+
+  <tr ng-repeat="club in clubs">
+    <td>{{club.name}}</td>
+    <td>{{club.address}}</td>
+    <td>{{club.phone}}</td>
+    <td>{{club.email}}</td>
+    <td>{{club.web}}</td>
+    <td>
+      <a><i class="fa fa-group fa-fw"></i>Tagok</a>
+      &nbsp;
+      <a><i class="fa fa-map fa-fw"></i>Térkép</a>
+    </td>
+  </tr>
+</table>

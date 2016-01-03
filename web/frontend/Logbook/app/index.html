@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="logbookApp" ng-controller="MainCtrl">
+  <body ng-app="logbookApp" ng-controller="MainCtrl" ng-cloak="true">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -53,6 +53,8 @@
               <li ng-class="{ active: isActive('/boats')}"><a href="#/boats">Hajók</a></li>
               <li ng-class="{ active: isActive('/regattas')}"><a ng-href="#/regattas">Versenyek</a></li>
               <li ng-class="{ active: isActive('/results')}"><a ng-href="#/results">Eredmények</a></li>
+              <li ng-class="{ active: isActive('/clubs')}"><a ng-href="#/clubs">Egyesületek</a></li>
+              <li ng-class="{ active: isActive('/ports')}"><a ng-href="#/ports">Kikötők</a></li>
             </ul>
 
             <!-- Login -->
@@ -116,6 +118,10 @@
         <script src="scripts/clubs/ClubModel.js"></script>
         <script src="scripts/clubs/ClubService.js"></script>
         <script src="scripts/clubs/ClubControllers.js"></script>
+
+        <script src="scripts/ports/PortModel.js"></script>
+        <script src="scripts/ports/PortService.js"></script>
+        <script src="scripts/ports/PortControllers.js"></script>
 
         <script src="scripts/users/UserModel.js"></script>
         <script src="scripts/users/UserService.js"></script>

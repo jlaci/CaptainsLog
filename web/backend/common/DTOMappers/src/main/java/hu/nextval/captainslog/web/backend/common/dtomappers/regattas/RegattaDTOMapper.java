@@ -25,6 +25,10 @@ public class RegattaDTOMapper implements DTOMapper<Regatta, RegattaDTO>{
 
     @Override
     public RegattaDTO mapTo(Regatta entity) {
+        if(entity == null) {
+            return null;
+        }
+
         RegattaDTO dto = new RegattaDTO();
 
         dto.setId(entity.getId());
@@ -45,27 +49,27 @@ public class RegattaDTOMapper implements DTOMapper<Regatta, RegattaDTO>{
 
     @Override
     public Regatta mapFrom(RegattaDTO dto) {
-        if(dto != null) {
-            Regatta regatta = new Regatta();
-            regatta.setId(dto.getId());
-            regatta.setName(dto.getName());
-            regatta.setStartDate(dto.getStartDate());
-            regatta.setEndDate(dto.getEndDate());
-            regatta.setRegattaType(Regatta.RegattaType.valueOf(dto.getType()));
-            regatta.setLocation(dto.getLocation());
-            regatta.setOrganizer(clubDTOMapper.mapFrom(dto.getOrganizer()));
-            regatta.setRaces(new ArrayList<Race>());
-
-            if (dto.getRaces() != null) {
-                for (RaceDTO raceDTO : dto.getRaces()) {
-                    Race race = raceDTOMapper.mapFrom(raceDTO);
-                    race.setRegatta(regatta);
-                    regatta.getRaces().add(race);
-                }
-            }
-            return regatta;
-        } else {
+        if(dto == null) {
             return null;
         }
+
+        Regatta regatta = new Regatta();
+        regatta.setId(dto.getId());
+        regatta.setName(dto.getName());
+        regatta.setStartDate(dto.getStartDate());
+        regatta.setEndDate(dto.getEndDate());
+        regatta.setRegattaType(Regatta.RegattaType.valueOf(dto.getType()));
+        regatta.setLocation(dto.getLocation());
+        regatta.setOrganizer(clubDTOMapper.mapFrom(dto.getOrganizer()));
+        regatta.setRaces(new ArrayList<Race>());
+
+        if (dto.getRaces() != null) {
+            for (RaceDTO raceDTO : dto.getRaces()) {
+                Race race = raceDTOMapper.mapFrom(raceDTO);
+                race.setRegatta(regatta);
+                regatta.getRaces().add(race);
+            }
+        }
+        return regatta;
     }
 }

@@ -13,6 +13,10 @@ public class ClubDTOMapper implements DTOMapper<Club, ClubDTO> {
 
     @Override
     public ClubDTO mapTo(Club entity) {
+        if(entity == null) {
+            return null;
+        }
+
         ClubDTO dto = new ClubDTO();
 
         dto.setId(entity.getId());
@@ -23,6 +27,11 @@ public class ClubDTOMapper implements DTOMapper<Club, ClubDTO> {
 
     @Override
     public Club mapFrom(ClubDTO dto) {
+        if(dto == null) {
+            return null;
+        }
+
+
         Club entity = new Club();
 
         entity.setId(dto.getId());

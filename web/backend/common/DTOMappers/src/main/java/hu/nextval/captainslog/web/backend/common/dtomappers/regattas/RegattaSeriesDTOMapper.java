@@ -21,6 +21,10 @@ public class RegattaSeriesDTOMapper implements DTOMapper<RegattaSeries, RegattaS
 
     @Override
     public RegattaSeriesDTO mapTo(RegattaSeries entity) {
+        if(entity == null) {
+            return null;
+        }
+
         RegattaSeriesDTO dto = new RegattaSeriesDTO();
 
         dto.setId(entity.getId());
@@ -36,6 +40,10 @@ public class RegattaSeriesDTOMapper implements DTOMapper<RegattaSeries, RegattaS
 
     @Override
     public RegattaSeries mapFrom(RegattaSeriesDTO dto) {
+        if(dto == null) {
+            return null;
+        }
+
         RegattaSeries regattaSeries = new RegattaSeries();
 
         if(dto != null) {

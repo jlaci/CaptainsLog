@@ -16,10 +16,10 @@
   <tr ng-repeat="boat in boats">
     <td>{{boat.name}}</td>
     <td>{{boat.sailNumber}}</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>{{boat.type}}</td>
+    <td>{{boat.port.name}}</td>
+    <td>{{boat.club.name}}</td>
+    <td>{{boat.owner.lastName}} {{boat.owner.firstName}}</td>
     <td>
       <a><i class="fa fa-list fa-fw"></i>Legénység</a>
       &nbsp;

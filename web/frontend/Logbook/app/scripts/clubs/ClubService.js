@@ -1,11 +1,11 @@
 "use strict";
 
 serviceModule.factory('ClubService', ['$resource', 'restServiceUrl', function ClubService($resource, restServiceUrl) {
-  var Club = $resource(restServiceUrl + "/club/");
+  var Clubs = $resource(restServiceUrl + "/club/");
 
   return {
     getAll : function(callback) {
-      Club.query(callback);
+      Clubs.query(callback);
     }
   };
 }]);

@@ -4,21 +4,40 @@
   <fieldset>
 
     <!-- Form Name -->
-    <legend>Form Name</legend>
+    <legend>Felhasználó</legend>
 
-    <!-- Text input-->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textinput">Felhasználónév</label>
+      <label class="col-md-4 control-label" for="username">Felhasználónév</label>
       <div class="col-md-4">
-        <input id="textinput" name="textinput" type="text" placeholder="Név" class="form-control input-md" ng-model="user.username">
+        <input id="username" name="username" type="text" placeholder="Név" class="form-control input-md" ng-model="user.username">
       </div>
     </div>
 
-    <!-- Text input-->
     <div class="form-group">
       <label class="col-md-4 control-label" for="email">Email</label>
       <div class="col-md-4">
         <input id="email" name="email" type="text" placeholder="email" class="form-control input-md" ng-model="user.email">
+      </div>
+    </div>
+
+  </fieldset>
+
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Személyes</legend>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="lastName">Vezetéknév</label>
+      <div class="col-md-4">
+        <input id="lastName" name="lastName" type="text" placeholder="Vezetéknév" class="form-control input-md" ng-model="user.sailor.lastName">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="firstName">Keresztnév</label>
+      <div class="col-md-4">
+        <input id="firstName" name="firstName" type="text" placeholder="Keresztnév" class="form-control input-md" ng-model="user.sailor.firstName">
       </div>
     </div>
 

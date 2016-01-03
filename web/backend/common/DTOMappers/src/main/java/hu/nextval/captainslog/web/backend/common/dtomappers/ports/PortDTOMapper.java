@@ -13,6 +13,10 @@ public class PortDTOMapper implements DTOMapper<Port, PortDTO> {
 
     @Override
     public PortDTO mapTo(Port entity) {
+        if(entity == null) {
+            return null;
+        }
+
         PortDTO dto = new PortDTO();
 
         dto.setId(entity.getId());
@@ -23,6 +27,10 @@ public class PortDTOMapper implements DTOMapper<Port, PortDTO> {
 
     @Override
     public Port mapFrom(PortDTO dto) {
+        if(dto == null) {
+            return null;
+        }
+
         Port port = new Port();
 
         port.setId(dto.getId());

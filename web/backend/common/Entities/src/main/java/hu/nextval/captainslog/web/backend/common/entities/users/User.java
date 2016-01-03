@@ -26,7 +26,7 @@ public class User implements BaseEntity<Long>{
 
     protected String email;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     protected Sailor sailor;
 
     @ManyToMany(fetch = FetchType.EAGER)
